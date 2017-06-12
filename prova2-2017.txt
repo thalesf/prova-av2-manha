@@ -1,0 +1,90 @@
+Unilasalle-RJ - AV2
+Aluno: Thales Ferreira da Silva 0050012587
+Prova Av2 de Laboratorio de Sistemas Operacionais
+Professor: Alex Salgado
+1o. Semestre de 2017   Turno: Manhã
+--------------------------------------------------
+1-Faça um script shell que:
+- Pergunte por um nome e crie uma pasta e um arquivo.txt com o mesmo nome inserido.
+
+2-Quantos erros tem no script abaixo? Qual(is) são eles?
+case "$file" in
+    *.txt}
+        echo "É um arquivo de texto."
+        cat "$file"
+        
+    *.gif|*.jpg|*.png}
+        echo "É uma figura."
+        xloadimage "$file"
+        
+    *}
+        echo "Não sei que arquivo é esse."
+        
+esac
+
+3-Usando estrutura de repetição, faça um script para exibir todos os arquivos
+da pasta atual com tamanho maior que 500kb.
+
+4-Usando estrutura de repetição, faça um script para calcular e exibir quantas
+pastas e quantos arquivos tem na pasta atual.
+
+5-Faça um script que leia um numero IP e retorna se endereço responde ou não ao 
+comando ping.
+Além disso, se for digitado um ip vazio, o script deve informar ao usuario.
+
+Respostas aqui:
+
+1- #!bin/bash
+
+echo "Digite um nome:"
+read nome
+
+mkdir $nome
+touch $nome.txt
+	
+2- Dois erros:
+	Onde tem as chaves com a extensão do arquivo deveria fechar um parênteses )
+	Faltaram os pontos e vírgula ;; depois do fechamento de cada condição
+3-#!bin/bash
+
+for j in $(ls)
+do
+	if [ -f $j ];then
+		find -size "+500k"
+	fi
+	exit 0
+done
+
+
+
+4 - 
+#!bin/bash
+totalarq=0
+totalpasta=0
+for j in $(ls)
+do
+	if [ -d $j ];then
+		((totalpasta++))
+	elif [ -f $j ];then
+		((totalarq++))
+	fi
+done
+		echo "Total de Pastas:" $totalpasta
+		echo "Total de Arquivos:" $totalarq
+	
+5-
+#!bin/bash
+
+echo "Digite o ip desejado:"
+read ip
+		
+ping -c 1 $ip >> /dev/null
+		
+if [ $? -eq 0 ];then
+	echo "Respondeu"
+elif [ -z $? ];then
+	echo "Ip vazio"
+else
+	echo "Não respondeu"
+fi	  
+	
